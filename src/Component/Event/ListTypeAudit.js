@@ -6,7 +6,7 @@ import moment from "moment";
 class ListTypeAudit extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: "CHỌN SUẤT",
+            headerTitle: "Ghi nhận thông tin",
             headerStyle: {
                 backgroundColor: ThemeColor.TEN_COLOR,
             },
@@ -22,11 +22,15 @@ class ListTypeAudit extends Component {
             data: [
                 {
                     id: 1,
-                    title: 'Suất 1 (5 thùng Guru)'
+                    title: 'Hình ảnh tổng quan'
                 },
                 {
                     id: 2,
-                    title: 'Suất 2 (4 thùng Fizzi)'
+                    title: 'Thông tin nông dân'
+                },
+                {
+                    id: 3,
+                    title: 'Báo cáo cuối ngày'
                 }
             ]
         }
@@ -54,9 +58,10 @@ class ListTypeAudit extends Component {
                     data={this.state.data}
                     renderItem={this._rendItem}
                     keyExtractor={(item, index) => (item + index)}
-                    numColumns={3}
+                    // numColumns={3}
                     style={{ backgroundColor: '#F8F8F8' }}
                 />
+                {this.renderButton()}
             </View>
         )
     }
@@ -73,11 +78,23 @@ class ListTypeAudit extends Component {
 
     handlePush(item, indexItem) {
         //IDSuat-EventStoreIdddmmyyyyHHMMssSSS
-        let infogroup = item.id + '-' + this.dataParam.eventStoreID + moment().format("DDMMYYYYHHmmssSSS")
-        let cloneData =  this.dataParam
-        cloneData.indexItem = indexItem
-        cloneData.infogroup = infogroup
-        this.props.navigation.navigate('TypeAuditDetail', cloneData)
+        if(indexItem == 0) {
+            this.props.navigation.navigate('DetailEvent', this.dataParam)
+
+        }
+        else if(indexItem == 1) {
+            let infogroup = this.dataParam.EventStoreID + moment().format("DDMMYYYYHHmmssSSS")
+            let cloneData =  this.dataParam
+            cloneData.infogroup = infogroup
+            // cloneData.indexItem = indexItem
+            // console.log(infogroup)
+            this.props.navigation.navigate('InfoEvent', this.dataParam)
+        }
+        else {
+            this.props.navigation.navigate('FinalEvent', this.dataParam)
+        }
+
+
       }
 }
 
@@ -91,7 +108,7 @@ const styles = StyleSheet.create({
     },
     renderTouch: {
         height: 50, 
-        width:((Dimensions.get('window').width / 2)-10), 
+        width:((Dimensions.get('window').width)-10), 
         justifyContent:'center', 
         alignItems:'center', 
         backgroundColor:'#27ae60', 
@@ -100,9 +117,9 @@ const styles = StyleSheet.create({
     viewItem: {
         justifyContent:'center', 
         alignItems:'center', 
-        width: Dimensions.get('window').width / 2, 
-        marginBottom:20, 
-        marginTop:20
+        width: Dimensions.get('window').width - 20, 
+        marginBottom:10, 
+        marginTop:10
     },
     viewButton: {
         flexDirection: 'row',

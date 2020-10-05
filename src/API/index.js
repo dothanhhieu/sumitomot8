@@ -31,9 +31,9 @@ export const postUploadImageAPI = (data) =>{
 
 //---- Get Event ID ------
 export function getListEventDetail(userID, roleID) {
-    console.log("http://wgs9api.tengroup.com.vn/api/province/listprovincedistrictward?eventID=1&code=" + id)
+    console.log("http://apibsat10.tengroup.com.vn/api/province/listprovincedistrictward?eventID=1&code=" + id)
 
-    return fetch("http://wgs9api.tengroup.com.vn/api/detailevent/listdetailevents?userID=+" + userID + "&roleID=" + roleID, {
+    return fetch("http://apibsat10.tengroup.com.vn/api/detailevent/listdetailevents?userID=+" + userID + "&roleID=" + roleID, {
         method: "GET",
         headers: ObjectHeader,
     })
@@ -43,8 +43,8 @@ export function getListEventDetail(userID, roleID) {
 
 //---- User Profile -----
 export function getProfile(eventID, userID) {
-    console.log("http://wgs9api.tengroup.com.vn/api/account/profile?eventID=" + eventID + "&userID=" + userID)
-    return fetch("http://wgs9api.tengroup.com.vn/api/account/profile?eventID=" + eventID + "&userID=" + userID, {
+    console.log("http://apibsat10.tengroup.com.vn/api/account/profile?eventID=" + eventID + "&userID=" + userID)
+    return fetch("http://apibsat10.tengroup.com.vn/api/account/profile?eventID=" + eventID + "&userID=" + userID, {
         method: "GET",
         headers: ObjectHeader,
     })
@@ -54,8 +54,8 @@ export function getProfile(eventID, userID) {
 
 //---- List Outlet -----
 export function getListOutlet(eventId, userId, roleId, keyWord) {
-    console.log("http://wgs9api.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + '&keyword=' + keyWord)
-    return fetch("http://wgs9api.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + '&keyword=' + keyWord, {
+    console.log("http://apibsat10.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + '&keyword=' + keyWord)
+    return fetch("http://apibsat10.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + '&keyword=' + keyWord, {
         method: "GET",
         headers: ObjectHeader,
     })
@@ -79,8 +79,8 @@ export function createStore(obj) {
 
 //---- List Store -----
 export function getListStore(eventId, userId, roleId, keyword) {
-    console.log("http://apisumitomot82020.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + "&keyword=" + keyword)
-    return fetch("http://apisumitomot82020.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + "&keyword=" + keyword, {
+    console.log("http://apibsat10.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + "&keyword=" + keyword)
+    return fetch("http://apibsat10.tengroup.com.vn/api/store/liststores?eventID=" + eventId + "&userID=" + userId + "&roleID=" + roleId + "&keyword=" + keyword, {
         method: "GET",
         headers: ObjectHeader,
     })
@@ -125,7 +125,7 @@ export function postSuccessPakage(obj) {
 
 //---- List District, Ward, Street -----
 export function getDistrictWard(id) {
-    return fetch("http://wgs9api.tengroup.com.vn/api/province/listprovincedistrictward?eventID=1&province=1&district=" + id, {
+    return fetch("http://apibsat10.tengroup.com.vn/api/province/listprovincedistrictward?eventID=1&province=1&district=" + id, {
         method: "GET",
         headers: ObjectHeader,
     })
@@ -134,7 +134,7 @@ export function getDistrictWard(id) {
 };
 
 export function getStreet(id) {
-    return fetch("http://wgs9api.tengroup.com.vn/api/province/liststreet?eventID=1&province=1&district=" + id, {
+    return fetch("http://apibsat10.tengroup.com.vn/api/province/liststreet?eventID=1&province=1&district=" + id, {
         method: "GET",
         headers: ObjectHeader,
     })
@@ -147,8 +147,8 @@ export function getStreet(id) {
 //---- Post Image -----
 export function postImage(obj) {
     console.log(obj)
-    console.log("http://wgs9api.tengroup.com.vn/api/event/postimagestring")
-    return fetch("http://wgs9api.tengroup.com.vn/api/event/postimagestring", {
+    console.log("http://apibsat10.tengroup.com.vn/api/event/postimagestring")
+    return fetch("http://apibsat10.tengroup.com.vn/api/event/postimagestring", {
         method: "POST",
         headers: ObjectHeader,
         body: JSON.stringify(obj)

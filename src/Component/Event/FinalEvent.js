@@ -19,13 +19,13 @@ const options = {
     }
 }
 
-const camDL = 'Hình đại lý đang ký tên'
-const camBB = 'Hình biên bản đã đủ thông tin'
+const camDL = 'Hình nhân sự checkout'
+const camBB = 'Hình danh sách cuối ngày'
 
 class FinalEvent extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: "HÌNH BIÊN BẢN",
+            headerTitle: "BÁO CÁO CUỐI CA",
             headerStyle: {
                 backgroundColor: ThemeColor.TEN_COLOR,
             },
@@ -37,11 +37,12 @@ class FinalEvent extends Component {
     constructor(props) {
         super(props);
         this.dataParam = this.props.navigation.state.params;
+        console.log(this.dataParam)
         this.state = {
             note: '',
             datas: [],
-            long: this.dataParam.long,
-            lat: this.dataParam.lat,
+            long: this.dataParam.Long,
+            lat: this.dataParam.Lat,
             status: true,
             disabledButton: false,
             showIndicatorUpdate: false,
@@ -49,11 +50,11 @@ class FinalEvent extends Component {
             sttImgDL: false,
             sttImgBB: false,
             paramPostInfo: {
-                "EventStoreID": this.dataParam.eventStoreID,
-                "StaffID": this.dataParam.idStaff,
-                "ChannelShiftID": this.dataParam.channelShiftID,
-                "Note": "Sumitomo Audit",
-                "DatePost": '',
+                "EventStoreID": this.dataParam.EventStoreID,
+                "StaffID": this.dataParam.StaffID,
+                "ChannelShiftID": this.dataParam.ChannelShiftID,
+                "Note": "PACK REDEMPTION",
+                "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),
                 "ListInfo": []
             },
             disabledAll: false
@@ -87,22 +88,24 @@ class FinalEvent extends Component {
             } else {
 
                 let cloneParam = this.state.paramPostInfo
+                //checkout
                 if (status === camDL) {
                     cloneParam.ListInfo = [{
-                        "QuestionID": 29,
+                        "QuestionID": 24,
                         "QuestionType": 0,
-                        "QuestionGroup": 3,
+                        "QuestionGroup": 5,
                         "Long": this.state.long,
                         "Lat": this.state.lat,
                         "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),
                         "Answer": ''
                     }]
                 }
+                //ds cuối ngày
                 else {
                     cloneParam.ListInfo = [{
-                        "QuestionID": 30,
+                        "QuestionID": 25,
                         "QuestionType": 0,
-                        "QuestionGroup": 3,
+                        "QuestionGroup": 5,
                         "Long": this.state.long,
                         "Lat": this.state.lat,
                         "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),

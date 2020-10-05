@@ -20,7 +20,7 @@ import GetLocation from 'react-native-get-location'
 export default class ListDetailEvent extends Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      headerTitle: 'SUMITOMO T8',
+      headerTitle: 'PACK REDEMPTION',
       headerStyle: {
         backgroundColor: '#e84118',
       },
@@ -154,7 +154,9 @@ export default class ListDetailEvent extends Component {
         "EventStoreID": item.eventStoreID,
         "StaffID": this.state.idStaff,
         "ChannelShiftID": this.state.channelShiftID,
-        "Note": "Sumitomo T8",
+        "Note": "Pack Redemption",
+        "Long": this.state.long,
+        "Lat": this.state.lat,
         "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),
         "ListInfo": [
           {
@@ -168,23 +170,8 @@ export default class ListDetailEvent extends Component {
           }
         ]
       }
-      Alert.alert(
-        'Khảo sát',
-        'Đại lý có tham gia trưng bày không?',
-        [
-          {
-            text: 'Có',
-            onPress: () => this.postInfoAPI(dataParam, 'Có'),
-            style: 'cancel',
-          },
-          {
-            text: 'Không',
-            onPress: () => this.postInfoAPI(dataParam, 'Không'),
-            style: 'cancel',
-          }
-        ],
-        { cancelable: false }
-      )
+      this.props.navigation.navigate('ListTypeAudit', dataParam)
+
     }
     else {
       alert(`Không thể lấy vị trí thiết bị`)

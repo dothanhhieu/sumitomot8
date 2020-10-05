@@ -96,10 +96,7 @@ export default class Login extends Component {
           behavior="padding"
           enabled={Platform.OS == 'ios' ? true : false}
           style={styles.keyAvoidView}>
-          <Image
-            source={require('../../Assets/Images/logo.png')}
-            style={styles.logo}
-            resizeMode={'contain'} />
+          <Text style={{fontSize:30, marginTop:100, marginBottom:50}}>PACK REDEMPTION</Text>
           {this.renderTextPhoneInput()}
           {this.renderTextPassInput()}
           {this.loginLoading()}

@@ -27,6 +27,7 @@ import ListTypeAudit from '../Component/Event/ListTypeAudit'
 import TypeAuditDetail from '../Component/Event/TypeAuditDetail'
 import NotSurvey from '../Component/Event/NotSurvey'
 import FinalEvent from '../Component/Event/FinalEvent'
+import InfoEvent from '../Component/Event/InfoEvent'
 
 import CreateStore from '../Component/Store/CreateStore'
 import ImageStore from '../Component/Store/ImageStore'
@@ -67,7 +68,8 @@ const AppStack = createStackNavigator({
   ImageFarmer: ImageFarmer,
   FinalFarmer: FinalFarmer,
   NotSurvey: NotSurvey,
-  FinalEvent: FinalEvent
+  FinalEvent: FinalEvent,
+  InfoEvent: InfoEvent
 });
 
 const AuthStack = createStackNavigator({ Login: Login });

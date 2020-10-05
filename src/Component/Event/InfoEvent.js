@@ -8,6 +8,7 @@ import Geolocation from 'react-native-geolocation-service';
 import Permissions from 'react-native-permissions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Header } from 'react-navigation';
+import InputType from '../../Global/InputType';
 
 const options = {
     exif: true,
@@ -22,18 +23,14 @@ const options = {
     }
 }
 
-const camSelfie = 'Hình tổng quan đại lý có bảng hiệu'
-const camGift = 'Hình nhân sự checkin'
-const camBB = 'Hình banner'
-const daiLyBB = 'Hình standee'
-const camQTDL = 'Hình poster'
-const camBBCD = 'Hình loa'
-const camBBTT = 'Hình quà omo'
+const camSelfie = 'Hình nông dân nhận quà'
+const camGift = 'Hình sổ 3 liên'
+const camBB = 'Hình danh sách'
 
-class DetailEvent extends Component {
+class InfoEvent extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: "THÔNG TIN TRƯNG BÀY",
+            headerTitle: "THÔNG TIN NÔNG DÂN",
             headerStyle: {
                 backgroundColor: ThemeColor.TEN_COLOR,
             },
@@ -46,17 +43,19 @@ class DetailEvent extends Component {
         super(props);
         this.dataParam = this.props.navigation.state.params;
         this.state = {
-            guru5: '',
-            go1: '',
-            fizzi2: '',
-            fizzi6: '',
-            starmer4: '',
-            starmer2: '',
-            banUi: '',
-            nonBH: '',
-            binhDa: '',
-            aoThun: '',
-            noiComDien: '',
+            name: '',
+            phone: '',
+            address: '',
+            caytrong: '',
+            dientich: '',
+            slqua: '',
+            antra100g: '',
+            antra500g: '',
+            antra1kg: '',
+            ali100g: '',
+            ali500g: '',
+            regen1: '',
+            regen2: '',
             datas: [],
             long: this.dataParam.Long,
             lat: this.dataParam.Lat,
@@ -67,10 +66,6 @@ class DetailEvent extends Component {
             sttImgSelfie: false,
             sttImgGift: false,
             sttImgBB: false,
-            sttImgDaiLyBB: false,
-            sttQTDL: false,
-            sttBBCD: false,
-            sttBBTT: false,
             paramPostInfo: {
                 "EventStoreID": this.dataParam.EventStoreID,
                 "StaffID": this.dataParam.StaffID,
@@ -79,7 +74,8 @@ class DetailEvent extends Component {
                 "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),
                 "ListInfo": []
             },
-            disabledAll: false
+            disabledAll: false,
+            infogroup: this.dataParam.infogroup
         }
     }
 
@@ -109,32 +105,16 @@ class DetailEvent extends Component {
                 )
             } else {
                 if(status === camSelfie) {
-                    //đại lý có bảng hiệu
-                    this.postUploadImage(response.uri, status, 1)
+                    //nong dan nhan qua
+                    this.postUploadImage(response.uri, status, 21)
                 }
                 else if (status === camGift) {
-                    //nhân sự checkin
-                    this.postUploadImage(response.uri, status, 2)
-                }
-                else if (status === camBB) {
-                    //banner
-                    this.postUploadImage(response.uri, status, 3)
-                }
-                else if (status === camQTDL) {
-                    //Poster
-                    this.postUploadImage(response.uri, status, 5)
-                }
-                else if (status === camBBCD) {
-                    //loa
-                    this.postUploadImage(response.uri, status, 6)
-                }
-                else if (status === camBBTT) {
-                    //qua omo
-                    this.postUploadImage(response.uri, status, 7)
+                    //so 3 lien
+                    this.postUploadImage(response.uri, status, 22)
                 }
                 else {
-                    //standee
-                    this.postUploadImage(response.uri, status, 4)
+                    //dsach
+                    this.postUploadImage(response.uri, status, 23)
                 }
             }
         });
@@ -143,30 +123,70 @@ class DetailEvent extends Component {
     renderTextPhoneInput() {
         return (
             <View>
-            <Text style={{marginTop:10, marginBottom:10, fontSize:16, fontWeight:'bold'}}>Suất hàng</Text>
+                <InputType
+                    title={"Họ và tên nông dân"}
+                    value={this.state.name}
+                    marginView={10}
+                    editText={true}
+                    textValue={this.textValue.bind(this)}
+                    placeHolder={"Nhập họ tên nông dân ..."}
+                />
+                <InputType
+                    title={"Điện thoại"}
+                    value={this.state.name}
+                    marginView={10}
+                    editText={true}
+                    keyboardType='phone-pad'
+                    textValue={this.textValue.bind(this)}
+                    placeHolder={"Nhập điện thoại nông dân ..."}
+                />
+                <InputType
+                    title={"Địa chỉ"}
+                    value={this.state.name}
+                    marginView={10}
+                    editText={true}
+                    textValue={this.textValue.bind(this)}
+                    placeHolder={"Nhập địa chỉ nông dân ..."}
+                />
+                <InputType
+                    title={"Cây trồng"}
+                    value={this.state.caytrong}
+                    marginView={10}
+                    editText={true}
+                    textValue={this.textValue.bind(this)}
+                    placeHolder={"Nhập tên cây trồng ..."}
+                />
+                <InputType
+                    title={"Diện tích"}
+                    value={this.state.dientich}
+                    marginView={10}
+                    editText={true}
+                    textValue={this.textValue.bind(this)}
+                    placeHolder={"Nhập diện tích ..."}
+                />
                 <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
                     <View style={{width:'45%'}}>
-                        <Text>Suất 5 thùng Guru:</Text>
+                        <Text>Số lượng quà nhận:</Text>
                         <View style={styles.inpTextWrapper}>
                             <TextInput
                                 placeholder={'Nhập số lượng'}
                                 underlineColorAndroid={'transparent'}
                                 style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ guru5: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.guru5}
+                                onChangeText={(text) => { this.setState({ slqua: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.slqua}
                                 keyboardType = {'numeric'}
                             />
                         </View>
                     </View>
                     <View style={{width:'45%'}}>
-                        <Text>Suất 10 thùng Sumithion:</Text>
+                        <Text>Số lượng Antracol 100g:</Text>
                         <View style={styles.inpTextWrapper}>
                             <TextInput
                                 placeholder={'Nhập số lượng'}
                                 underlineColorAndroid={'transparent'}
                                 style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ go1: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.go1}
+                                onChangeText={(text) => { this.setState({ antra100g: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.antra100g}
                                 keyboardType = {'numeric'}
                             />
                         </View>
@@ -174,27 +194,55 @@ class DetailEvent extends Component {
                 </View>
                 <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
                     <View style={{width:'45%'}}>
-                        <Text>Suất 2 thùng Fizzi:</Text>
+                        <Text>Số lượng Antracol 500g:</Text>
                         <View style={styles.inpTextWrapper}>
                             <TextInput
                                 placeholder={'Nhập số lượng'}
                                 underlineColorAndroid={'transparent'}
                                 style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ fizzi2: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.fizzi2}
+                                onChangeText={(text) => { this.setState({ antra500g: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.antra500g}
                                 keyboardType = {'numeric'}
                             />
                         </View>
                     </View>
                     <View style={{width:'45%'}}>
-                        <Text>Suất 6 thùng Fizzi:</Text>
+                        <Text>Số lượng Antracol 1kg:</Text>
                         <View style={styles.inpTextWrapper}>
                             <TextInput
                                 placeholder={'Nhập số lượng'}
                                 underlineColorAndroid={'transparent'}
                                 style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ fizzi6: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.fizzi6}
+                                onChangeText={(text) => { this.setState({ antra1kg: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.antra1kg}
+                                keyboardType = {'numeric'}
+                            />
+                        </View>
+                    </View>
+                </View>
+                <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
+                    <View style={{width:'45%'}}>
+                        <Text>Số lượng Aliette 100g:</Text>
+                        <View style={styles.inpTextWrapper}>
+                            <TextInput
+                                placeholder={'Nhập số lượng'}
+                                underlineColorAndroid={'transparent'}
+                                style={styles.inpText}
+                                onChangeText={(text) => { this.setState({ ali100g: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.ali100g}
+                                keyboardType = {'numeric'}
+                            />
+                        </View>
+                    </View>
+                    <View style={{width:'45%'}}>
+                        <Text>Số lượng Aliette 500g:</Text>
+                        <View style={styles.inpTextWrapper}>
+                            <TextInput
+                                placeholder={'Nhập số lượng'}
+                                underlineColorAndroid={'transparent'}
+                                style={styles.inpText}
+                                onChangeText={(text) => { this.setState({ ali500g: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.ali500g}
                                 keyboardType = {'numeric'}
                             />
                         </View>
@@ -202,99 +250,27 @@ class DetailEvent extends Component {
                 </View>
                 <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
                     <View style={{width:'45%'}}>
-                        <Text>Suất 4 thùng Starmer:</Text>
+                        <Text>Số lượng Regent WG 1g:</Text>
                         <View style={styles.inpTextWrapper}>
                             <TextInput
                                 placeholder={'Nhập số lượng'}
                                 underlineColorAndroid={'transparent'}
                                 style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ starmer4: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.starmer4}
+                                onChangeText={(text) => { this.setState({ regen1: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.regen1}
                                 keyboardType = {'numeric'}
                             />
                         </View>
                     </View>
                     <View style={{width:'45%'}}>
-                        <Text>Suất 2 thùng Starmer:</Text>
+                        <Text>Số lượng Regent WG 1.6g:</Text>
                         <View style={styles.inpTextWrapper}>
                             <TextInput
                                 placeholder={'Nhập số lượng'}
                                 underlineColorAndroid={'transparent'}
                                 style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ starmer2: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.starmer2}
-                                keyboardType = {'numeric'}
-                            />
-                        </View>
-                    </View>
-                </View>
-                <Text style={{marginTop:10, marginBottom:10, fontSize:16, fontWeight:'bold'}}>Suất quà</Text>
-                <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
-                    <View style={{width:'45%'}}>
-                        <Text>1 bàn ủi Philip:</Text>
-                        <View style={styles.inpTextWrapper}>
-                            <TextInput
-                                placeholder={'Nhập số lượng'}
-                                underlineColorAndroid={'transparent'}
-                                style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ banUi: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.banUi}
-                                keyboardType = {'numeric'}
-                            />
-                        </View>
-                    </View>
-                    <View style={{width:'45%'}}>
-                        <Text>3 nón bảo hiểm:</Text>
-                        <View style={styles.inpTextWrapper}>
-                            <TextInput
-                                placeholder={'Nhập số lượng'}
-                                underlineColorAndroid={'transparent'}
-                                style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ nonBH: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.nonBH}
-                                keyboardType = {'numeric'}
-                            />
-                        </View>
-                    </View>
-                </View>
-                <View style={{flexDirection:'row', justifyContent:'space-between', marginTop:20}}>
-                    {/**
-                    <View style={{width:'45%'}}>
-                        <Text>1 áo thun cao cấp:</Text>
-                        <View style={styles.inpTextWrapper}>
-                            <TextInput
-                                placeholder={'Nhập số lượng'}
-                                underlineColorAndroid={'transparent'}
-                                style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ aoThun: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.aoThun}
-                                keyboardType = {'numeric'}
-                            />
-                        </View>
-                    </View>
-                     */}
-                    <View style={{width:'45%'}}>
-                        <Text>1 bình đá Duy Tân:</Text>
-                        <View style={styles.inpTextWrapper}>
-                            <TextInput
-                                placeholder={'Nhập số lượng'}
-                                underlineColorAndroid={'transparent'}
-                                style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ binhDa: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.binhDa}
-                                keyboardType = {'numeric'}
-                            />
-                        </View>
-                    </View>
-                    <View style={{width:'45%'}}>
-                        <Text>1 nồi cơm điện:</Text>
-                        <View style={styles.inpTextWrapper}>
-                            <TextInput
-                                placeholder={'Nhập số lượng'}
-                                underlineColorAndroid={'transparent'}
-                                style={styles.inpText}
-                                onChangeText={(text) => { this.setState({ noiComDien: (text.replace(',', '').replace('.', ''))})}}
-                                value={this.state.noiComDien}
+                                onChangeText={(text) => { this.setState({ regen2: (text.replace(',', '').replace('.', ''))})}}
+                                value={this.state.regen2}
                                 keyboardType = {'numeric'}
                             />
                         </View>
@@ -338,27 +314,7 @@ class DetailEvent extends Component {
                             <Text>{camBB}</Text>
                             {this.renderCheckin(this.state.sttImgBB)}
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.toucnCap} onPress={() => this.pressCapture(camQTDL)} disabled={this.state.disabledButton}>
-                            <Image source={require('../../Assets/Images/iconCamera.jpg')} style={styles.imgIcon} resizeMode={'contain'}></Image>
-                            <Text>{camQTDL}</Text>
-                            {this.renderCheckin(this.state.sttQTDL)}
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.toucnCap} onPress={() => this.pressCapture(daiLyBB)} disabled={this.state.disabledButton}>
-                            <Image source={require('../../Assets/Images/iconCamera.jpg')} style={styles.imgIcon} resizeMode={'contain'}></Image>
-                            <Text>{daiLyBB}</Text>
-                            {this.renderCheckin(this.state.sttImgDaiLyBB)}
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.toucnCap} onPress={() => this.pressCapture(camBBCD)} disabled={this.state.disabledButton}>
-                            <Image source={require('../../Assets/Images/iconCamera.jpg')} style={styles.imgIcon} resizeMode={'contain'}></Image>
-                            <Text>{camBBCD}</Text>
-                            {this.renderCheckin(this.state.sttBBCD)}
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.toucnCap} onPress={() => this.pressCapture(camBBTT)} disabled={this.state.disabledButton}>
-                            <Image source={require('../../Assets/Images/iconCamera.jpg')} style={styles.imgIcon} resizeMode={'contain'}></Image>
-                            <Text>{camBBTT}</Text>
-                            {this.renderCheckin(this.state.sttBBTT)}
-                        </TouchableOpacity>
-
+                        {this.renderTextPhoneInput()}
                         {this.renderButton()}
                     </View>
                 </ScrollView>
@@ -377,16 +333,33 @@ class DetailEvent extends Component {
         )
     }
 
+    textValue(title, value) {
+        switch (title) {
+          case "Họ và tên nông dân": this.setState({ name: value })
+              break;
+          case "Điện thoại": this.setState({ phone: value })
+              break;
+          case "Địa chỉ": this.setState({ address: value })
+              break;
+          case "Cây trồng": this.setState({ caytrong: value })
+              break;   
+          case "Diện tích": this.setState({ dientich: value })
+            break;            
+          default: break
+          }
+      }
+
     addObjItem(questionId, answer) {
         if (answer != '') {
             let obj = {
                 "QuestionID": questionId,
                 "QuestionType": 1,
-                "QuestionGroup": 1,
+                "QuestionGroup": 4,
                 "Long": this.state.long,
                 "Lat": this.state.lat,
                 "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),
-                "Answer": answer
+                "Answer": answer,
+                "infogroup":this.state.infogroup
             }
     
             this.state.paramPostInfo.ListInfo.push(obj)
@@ -395,11 +368,12 @@ class DetailEvent extends Component {
             let obj = {
                 "QuestionID": questionId,
                 "QuestionType": 1,
-                "QuestionGroup": 1,
+                "QuestionGroup": 4,
                 "Long": this.state.long,
                 "Lat": this.state.lat,
                 "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),
-                "Answer": 0
+                "Answer": 0,
+                "infogroup":this.state.infogroup
             }
     
             this.state.paramPostInfo.ListInfo.push(obj)
@@ -408,16 +382,19 @@ class DetailEvent extends Component {
     }
 
     checkDataPush() {
-        this.addObjItem(8,this.state.guru5)
-        this.addObjItem(9,this.state.go1)
-        this.addObjItem(10,this.state.fizzi2)
-        this.addObjItem(11,this.state.fizzi6)
-        this.addObjItem(12,this.state.starmer4)
-        this.addObjItem(13,this.state.starmer2)
-        this.addObjItem(14,this.state.banUi)
-        this.addObjItem(15,this.state.nonBH)
-        this.addObjItem(17,this.state.binhDa)
-        this.addObjItem(18,this.state.noiComDien)
+        this.addObjItem(8,this.state.name)
+        this.addObjItem(9,this.state.phone)
+        this.addObjItem(10,this.state.address)
+        this.addObjItem(11,this.state.caytrong)
+        this.addObjItem(12,this.state.dientich)
+        this.addObjItem(13,this.state.slqua)
+        this.addObjItem(14,this.state.antra100g)
+        this.addObjItem(15,this.state.antra500g)
+        this.addObjItem(16,this.state.antra1kg)
+        this.addObjItem(17,this.state.ali100g)
+        this.addObjItem(18,this.state.ali500g)
+        this.addObjItem(19,this.state.regen1)
+        this.addObjItem(20,this.state.regen2)
         console.log(this.state.paramPostInfo)
         this.postInfoAPI(this.state.paramPostInfo)
     }
@@ -425,17 +402,18 @@ class DetailEvent extends Component {
     doneButtonHandle() {
         if(this.state.sttImgSelfie == true && 
             this.state.sttImgGift == true && 
-            this.state.sttImgBB == true && 
-            this.state.sttImgDaiLyBB == true &&
-            this.state.sttQTDL == true &&
-            this.state.sttBBCD == true &&
-            this.state.sttBBTT == true
+            this.state.sttImgBB == true 
             ) {
-            // this.checkDataPush()
+            if(this.state.name == "" || this.state.phone == '' || this.state.address == '' || this.state.caytrong == '' || this.state.dientich == '' || this.state.slqua == '') {
+                alert('Vui lòng nhập đủ thông tin nông dân')
+            }
+            else if (this.state.slqua > 15) {
+                alert('Số lượng quà vượt quá số lượng cho phép Bạn cần liên hệ với admin')
+            }
+            else {
+                this.checkDataPush()
+            }
             //push
-
-            this.props.navigation.goBack()
-
         }
         else {
             alert('Vui lòng chụp đủ hình')
@@ -459,11 +437,12 @@ class DetailEvent extends Component {
                     cloneParam.ListInfo = [{
                         "QuestionID": idImage,
                         "QuestionType": 0,
-                        "QuestionGroup": 1,
+                        "QuestionGroup": 4,
                         "Long": this.state.long,
                         "Lat": this.state.lat,
                         "DatePost": moment().format("DD/MM/YYYY HH:mm:ss"),
-                        "Answer": data.result
+                        "Answer": data.result,
+                        "infogroup":this.state.infogroup
                     }]
                     console.log(cloneParam)
                     API.postInfo(cloneParam)
@@ -476,21 +455,10 @@ class DetailEvent extends Component {
                                 else if (nameImage === camGift) {
                                     this.setState({ "sttImgGift": true })
                                 }
-                                else if (nameImage === camBB) {
+                                else {
                                     this.setState({"sttImgBB": true})
                                 }
-                                else if (nameImage === camQTDL) {
-                                    this.setState({"sttQTDL": true})
-                                }
-                                else if (nameImage === camBBCD) {
-                                    this.setState({"sttBBCD": true})
-                                }
-                                else if (nameImage === camBBTT) {
-                                    this.setState({"sttBBTT": true})
-                                }
-                                else {
-                                    this.setState({"sttImgDaiLyBB":true})
-                                }
+                                
                             }
                             else {
                                 alert(result.message)
@@ -530,7 +498,20 @@ class DetailEvent extends Component {
         API.postInfo(paramObj)
             .then(result => {
                 if (result.status) {
-                    this.props.navigation.goBack()
+                    Alert.alert(
+                        'Thông báo',
+                        'Gửi thông tin thành công',
+                        [
+                            {
+                                text: 'OK',
+                                onPress: () =>  this.props.navigation.goBack(),
+
+                                style: 'OK',
+                            }
+                        ],
+                        { cancelable: false }
+                    )
+
                 }
                 else {
                     alert(result.message)
@@ -628,4 +609,4 @@ const styles = StyleSheet.create({
         padding: 0
     },
 })
-export default DetailEvent
+export default InfoEvent
