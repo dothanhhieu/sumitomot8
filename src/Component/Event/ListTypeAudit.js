@@ -93,8 +93,6 @@ class ListTypeAudit extends Component {
         else {
             this.props.navigation.navigate('FinalEvent', this.dataParam)
         }
-
-
       }
 }
 
